@@ -1,22 +1,33 @@
-import logo from './logo.svg';
+import React, {useState} from "react";
 import './App.css';
+import Cards from "./components/Cards";
 
 function App() {
+const [giveQuote, setgiveQuote] = useState ([])
+
+  const simpleQuote = () => {
+    fetch('https://simpsons-quotes-api.herokuapp.com/quotes')
+    
+    .then((response) => response.json())
+   
+    .then((data) => {
+      setgiveQuote(data)
+      
+    });
+   };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={simpleQuote} >APPUI</button>
+     {giveQuote.map((quote, index) => {
+       return (
+         <Cards key ={index} character= {quote.character}
+         image= {quote.image}
+         quote= {quote.quote}/>
+       )
+     })}
+      
       </header>
     </div>
   );
